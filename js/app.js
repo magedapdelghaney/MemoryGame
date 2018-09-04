@@ -2,7 +2,20 @@
  * Create a list that holds all of your cards
  */
 
+var cards =document.querySelectorAll(".card");
+var newCards=[];
+console.log(cards);
 
+for (var i = 0; i < cards.length; i++) {
+  cards[i].classList.add("open");
+  cards[i].classList.add("show");
+}
+
+ newCards=shuffle(cards);
+   console.log(cards);
+ for (var r = 0; r < cards.length; r++) {
+
+ }
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
