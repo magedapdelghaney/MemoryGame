@@ -2,26 +2,46 @@
  * Create a list that holds all of your cards
  */
 
-var cards =document.querySelectorAll(".card");
+var cards = ["diamond","paper-plane-o","bolt","leaf","bicycle","cube","anchor"]
+
+
+
 var newCards;
 
-// for (var i = 0; i < cards.length; i++) {
-//   cards[i].classList.add("open");
-//   cards[i].classList.add("show");
+var openCards = [];
+
+// function flip(e) {
+//     e.target.classList.toggle("show");
+//     e.target.classList.toggle("open");
+//     openCards.push(e);
+//     checkEquality();
 // }
 
-   newCards=shuffle(cards);
-   console.log(cards);
-   console.log(newCards);
+// function checkEquality() {
+//     if (openCards.length > 1) {
+//         console.log(openCards[0].classList);
+//         if (openCards[0].classList === openCards[1].classList) {
+//             alert("hey");
+//         }
+
+//     }
+// // }
+
+// for (var i = 0; i < cards.length; i++) {
+//     cards[i].addEventListener("click", flip)
+// }
+newCards = shuffle(cards);
+console.log(cards);
+console.log(newCards);
 
 
- for (var r = 0; r < cards.length; r++) {
-console.log(cards[r].innerHTML)
- }
- console.log("-----------------")
- for (var t = 0; t < newCards.length; t++) {
-  console.log(newCards[t].innerHTML)
-   }
+for (var r = 0; r < cards.length; r++) {
+    console.log(cards[r].innerHTML)
+}
+console.log("-----------------")
+for (var t = 0; t < newCards.length; t++) {
+    console.log(newCards[t].innerHTML)
+}
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
