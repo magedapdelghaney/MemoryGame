@@ -3,19 +3,25 @@
  */
 
 var cards =document.querySelectorAll(".card");
-var newCards=[];
-console.log(cards);
+var newCards;
 
-for (var i = 0; i < cards.length; i++) {
-  cards[i].classList.add("open");
-  cards[i].classList.add("show");
-}
+// for (var i = 0; i < cards.length; i++) {
+//   cards[i].classList.add("open");
+//   cards[i].classList.add("show");
+// }
 
- newCards=shuffle(cards);
+   newCards=shuffle(cards);
    console.log(cards);
- for (var r = 0; r < cards.length; r++) {
+   console.log(newCards);
 
+
+ for (var r = 0; r < cards.length; r++) {
+console.log(cards[r].innerHTML)
  }
+ console.log("-----------------")
+ for (var t = 0; t < newCards.length; t++) {
+  console.log(newCards[t].innerHTML)
+   }
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
