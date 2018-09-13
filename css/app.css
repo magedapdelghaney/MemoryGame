@@ -2,14 +2,11 @@ html {
     box-sizing: border-box;
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
     box-sizing: inherit;
 }
 
-html,
-body {
+html, body {
     width: 100%;
     height: 100%;
     margin: 0;
@@ -17,7 +14,8 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: #ffffff url('../img/geometry2.png');
+    /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
 }
 
@@ -33,6 +31,10 @@ h1 {
     font-weight: 300;
 }
 
+.padding-5
+{
+    padding:5px;
+}
 /*
  * Styles for the deck of cards
  */
@@ -81,12 +83,12 @@ h1 {
     font-size: 33px;
 }
 
-.deck .card.not-match
-{
+.deck .card.not-match {
     cursor: default;
     background: red;
     font-size: 33px;
 }
+
 /*
  * Styles for the Score Panel
  */
@@ -112,4 +114,81 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+.shake {
+    animation: shake 0.82s;
+    transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+.success-shake {
+    animation: shakes 0.82s;
+    transform: translate3d(0, 0, 0);
+}
+
+@keyframes shakes {
+    10%, 90% {
+        transform: translate3d(1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(4px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+.winning-board {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 100px;
+}
+
+.winning-show {
+    visibility: visible;
+    opacity: 1;
+}
+.btn-success
+{
+    margin-top: 30px;
+    padding: 16px;
+    box-shadow: none;
+    background-color: #57e757;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.check-mark-img
+{
+    width: 100px;
 }

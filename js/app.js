@@ -2,24 +2,31 @@
  * Create a list that holds all of your cards
  */
 
-var cards = ["diamond","paper-plane-o","bomb","bolt","leaf","bicycle","cube","anchor","diamond","paper-plane-o","bolt","leaf","bicycle","cube","anchor","bomb"];
+//  define our init card list with all avaliable items 
 
-var newCards;
+let cards = ["diamond", "paper-plane-o", "bomb", "bolt", "leaf", "bicycle", "cube",
+    "anchor", "diamond", "paper-plane-o", "bolt", "leaf", "bicycle", "cube", "anchor", "bomb"];
+let openCards = [];
+let matches = 0;
+let movesCount = 0;
+let starsCount = 3;
 
-var openCards = [];
+/*start Game */
+
+initGame();
 
 
-addingCards(cards);
-function addingCards(cardsList)
-{
+function initGame() {
+
+    let cardsList = shuffle(cards);
     const fragment = document.createDocumentFragment();  // ← uses a DocumentFragment instead of a <div>
     for (let index = 0; index < cardsList.length; index++) {
 
-        var card= document.createElement("li");
+        var card = document.createElement("li");
         card.classList.add("card");
 
-        cardIcon=document.createElement("li");
-        cardIcon.classList.add("fa","fa-"+cardsList[index])
+        cardIcon = document.createElement("li");
+        cardIcon.classList.add("fa", "fa-" + cardsList[index])
         card.appendChild(cardIcon);
         card.addEventListener("click", flip)
 
@@ -28,62 +35,151 @@ function addingCards(cardsList)
     }
     document.querySelector(".deck").appendChild(fragment);
 }
- function flip(e) {
 
-     e.target.classList.toggle("show");
-     e.target.classList.toggle("open");
+// update user moves
+function updateMovesCount() {
+    movesCount++;
+    document.querySelector('.moves').textContent = movesCount;
+    return movesCount;
+}
 
-     openCards.push(e);
+function resetMoves() {
+    movesCount = 0;
+    document.querySelector('.moves').textContent = movesCount;
+}
+/* reset stars Count for each game start */
 
-     if (openCards.length > 1)
-     {
-     checkEquality();
-     }
- }
+function resetStars(){
+    starsCount = 3;
+    document.getElementById('starsList').innerHTML = '';
+    for (let i = 0; i < 3; i++) {
+       let star=  document.createElement("i");
+       let starCont=  document.createElement("li");
+       star.classList.add("fa","fa-star");
+       starCont.appendChild(star);
+       document.getElementById('starsList').appendChild(starCont);
+    }
 
- function flipBack(e) {
+}
+
+/* flipping Card (open and close) */
+
+function flip(e) {
+
+    let newMoveCount = updateMovesCount();
+    updateStarsCount(newMoveCount);
+    e.target.classList.toggle("show");
+    e.target.classList.toggle("open");
+    e.target.removeEventListener('click', flip);
+    openCards.push(e);
+
+    if (openCards.length > 1) {
+        checkEquality();
+    }
+}
+
+function flipBack(e) {
 
     e.target.classList.toggle("show");
     e.target.classList.toggle("open");
     e.target.classList.toggle("not-match");
-    openCards=[];
+    e.target.classList.toggle("shake");
+    e.target.addEventListener('click', flip);
+
 
 }
 
- function checkEquality() {
+/* checking success matching each two identical shapes */
 
-    var firstCard=openCards[0];
-    var secondCard=openCards[1];
+function matchingSuccess(firstCard, secondCard) {
+    firstCard.target.classList.add('match', 'success-shake');
+    secondCard.target.classList.add('match', 'success-shake');
+    openCards = [];
+    matches++;
+    checkWinning();
 
-         if (firstCard.target.childNodes[0].classList[1] === secondCard.target.childNodes[0].classList[1])
-         {
-            firstCard.target.classList.add('match');
-             secondCard.target.classList.add('match');
-             openCards=[];
-         }
+}
 
-         else
-         {
-            firstCard.target.classList.add('not-match');
-            secondCard.target.classList.add('not-match');
-            flipBack(firstCard);
-            flipBack(secondCard);
+function matchingFaild(firstCard, secondCard) {
+    firstCard.target.classList.add('not-match', 'shake');
+    secondCard.target.classList.add('not-match', 'shake');
+    setTimeout(function () { flipBack(firstCard) }, 1000);
+    setTimeout(function () { flipBack(secondCard) }, 1000);
+    openCards = [];
+
+}
+
+function checkEquality() {
+
+    var firstCard = openCards[0];
+    var secondCard = openCards[1];
+
+    if (firstCard.target.childNodes[0].classList[1] === secondCard.target.childNodes[0].classList[1]) {
+        matchingSuccess(firstCard, secondCard);
+    }
+
+    else {
+        matchingFaild(firstCard, secondCard);
+    }
+}
+
+// update Rating score 
+
+function updateStarsCount(moves) {
+
+    switch (moves) {
+        case 20:
+
+            starsCount = 2;
+            removeStar();
+            break;
+        case 40:
+
+            starsCount = 1;
+            removeStar();
+            break;
+        case 60:
+
+            starsCount = 0;
+            removeStar();
+            break;
+
+    }
+
+}
+function removeStar() {
+    document.getElementById("starsList").children[0].remove();
+}
+
+//check if user match all available cards shapes
+
+function checkWinning() {
+ 
+    if (matches === (cards.length/2))
+     {
+        document.querySelector(".winning-board").classList.add("winning-show");
+        document.getElementById('moves').textContent = movesCount;
+        document.getElementById('starsResult').textContent = starsCount;
+        
+    }
+
+}
+
+//reset all game scores and state
+
+function resetGame() {
+    document.querySelector(".deck").innerHTML = "";
+    initGame();
+    resetMoves();
+    resetStars();
+    openCards = [];
+    matches = 0;
+    document.querySelector(".winning-board").classList.remove('winning-show');
+
+}
 
 
-         }
 
-
-
-
- }
-
-// for (var i = 0; i < cards.length; i++) {
-//     cards[i].addEventListener("click", flip)
-// }
-console.log(cards);
-newCards = shuffle(cards);
-
-console.log(newCards);
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
